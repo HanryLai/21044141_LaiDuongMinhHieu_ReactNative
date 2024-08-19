@@ -37,5 +37,4 @@ console.log("cau 2: ");
 console.log("data 1: ");
 cau2_print(mark1BMI, john1BMI);
 console.log("data 2: ");
-
 cau2_print(mark2BMI, john2BMI);
