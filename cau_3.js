@@ -5,16 +5,6 @@
 const Dolphins = [96, 108, 89];
 const Koalas = [88, 91, 110];
 
-const DolphinsBonus1 = {
-    dolphins: [97, 112, 101],
-    koalas: [109, 95, 123],
-};
-
-const DolphinsBonus2 = {
-    dolphins: [97, 112, 101],
-    koalas: [109, 95, 106],
-};
-
 const average = (arr) => {
     return arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 };
