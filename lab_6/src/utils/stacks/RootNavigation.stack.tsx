@@ -31,10 +31,6 @@ export const RootNavigation = ({ navigation }: PropsNavigate) => {
             <Stack.Screen
                 name="Screen_2"
                 component={Screen_2}
-                // options={({ navigation }) => ({
-                //     headerLeft: () =>
-                //         BackScreenComponent({ navigation } as unknown as PropsNavigate),
-                // })}
                 options={{
                     header: ({ navigation }) =>
                         CustomerHeader({ navigation } as unknown as PropsNavigate),
