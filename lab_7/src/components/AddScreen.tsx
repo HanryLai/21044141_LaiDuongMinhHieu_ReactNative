@@ -8,18 +8,17 @@ import { api_products } from "../api/product_data.api";
 const AddScreen = ({ navigation }: Props) => {
     const [job, setJob] = useState<string>("");
     function onPost() {
-        alert("Your job is: " + job);
         axios
             .post(api_products + "/product", {
                 title: job,
+                completed: false,
             })
             .then((res) => {
-                console.log(res.data);
                 alert("Post successfully ");
                 navigation.navigate("ListScreen", { isReload: true });
             })
             .catch((err) => {
-                console.log(err);
+                alert("API ERROR");
             });
     }
     return (

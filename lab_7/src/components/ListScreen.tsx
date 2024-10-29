@@ -3,15 +3,23 @@ import Feather from "@expo/vector-icons/Feather";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { Props } from "../types/navigation.type";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { api_products, ListDataType } from "../api/product_data.api";
 const ListScreen = ({ navigation, route }: Props) => {
     const [data, setData] = useState<ListDataType[]>([]);
+    const [updateData, setUpdateData] = useState<ListDataType>();
+    const [isUpdate, setIsUpdate] = useState<boolean>(false);
     useEffect(() => {
         fetchData();
-    }, []);
+        if (route.params?.isReload) {
+            fetchData();
+            console.log("RELOAD", route.params.isReload);
+        }
+    }, [route]);
 
     function fetchData() {
         axios
@@ -34,6 +42,41 @@ const ListScreen = ({ navigation, route }: Props) => {
             })
             .catch((err) => {
                 alert("THE FUCKING DELETE ITEM");
+            });
+    }
+
+    function onPut(id: string) {
+        axios
+            .put(api_products + "/product/" + id, {
+                ...data, // dữ liệu cần update
+            })
+            .then((res) => {
+                alert("update successfully ");
+                fetchData(); // reload UI
+            })
+            .catch((err) => {
+                alert("Failed" + err);
+            });
+    }
+
+    function onUpdate(item: ListDataType) {
+        if (isUpdate == true) {
+            alert("You must final update other item before update new item");
+            return null;
+        }
+        setUpdateData(item);
+        setIsUpdate(true);
+    }
+
+    function onConfirmUpdate() {
+        axios
+            .put(api_products + "/product" + updateData?.id, updateData)
+            .then((res) => {
+                alert("UPDATE SUCCESSFULLY");
+                setIsUpdate(false), fetchData();
+            })
+            .catch((err) => {
+                alert("LỖI CMNr");
             });
     }
 
@@ -81,14 +124,34 @@ const ListScreen = ({ navigation, route }: Props) => {
                             )}
 
                             <Text style={styles.title}>{item.title}</Text>
+                            <TextInput value={item.title}></TextInput>
                             <TouchableOpacity
+                                style={styles.btnEvent}
                                 onPress={() => {
                                     onDelete(item.id);
                                 }}
                             >
-                                <Text>XÓA </Text>
+                                <Text style={styles.textEvent}>DELETE </Text>
                             </TouchableOpacity>
-                            <Entypo style={styles.editIcon} name="pencil" size={24} color="black" />
+                            {isUpdate && updateData?.id == item.id ? (
+                                <MaterialIcons
+                                    onPress={() => onConfirmUpdate()}
+                                    name="cancel"
+                                    size={24}
+                                    color="black"
+                                />
+                            ) : (
+                                <View>
+                                    <Entypo
+                                        style={styles.editIcon}
+                                        onPress={() => onUpdate(item)}
+                                        name="pencil"
+                                        size={24}
+                                        color="black"
+                                    />
+                                    <EvilIcons name="check" size={24} color="black" />
+                                </View>
+                            )}
                         </View>
                     );
                 }}
@@ -140,6 +203,7 @@ const styles = StyleSheet.create({
     },
     editIcon: {
         color: "red",
+        margin: "auto",
     },
     btnContainer: {
         width: 100,
@@ -153,6 +217,21 @@ const styles = StyleSheet.create({
     btnText: {
         color: "#fff",
         fontSize: 50,
+    },
+
+    btnEvent: {
+        width: 70,
+        height: 40,
+        backgroundColor: "#26c3d9",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 50,
+        marginHorizontal: 4,
+    },
+    textEvent: {
+        color: "#000",
+        fontWeight: "bold",
+        fontSize: 12,
     },
 });
 export default ListScreen;

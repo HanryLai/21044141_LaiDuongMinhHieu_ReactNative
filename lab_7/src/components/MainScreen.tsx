@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
+import { useState } from "react";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Props } from "../types/navigation.type";
 const MainScreen = ({ navigation }: Props) => {
+    const [username, setUsername] = useState<string>("");
     function onPress() {
-        navigation.navigate("ListScreen", {});
+        navigation.navigate("ListScreen", { username: username });
     }
     return (
         <View style={styles.container}>
@@ -12,7 +14,12 @@ const MainScreen = ({ navigation }: Props) => {
             <Text style={styles.title}>MANAGE YOUR {"\n"}TASK</Text>
             <View style={styles.container_inputEmail}>
                 <Entypo style={styles.iconEmail} name="mail" size={24} color="black" />
-                <TextInput style={styles.inputEmail} placeholder="Enter your name" />
+                <TextInput
+                    onChangeText={(text) => setUsername(text)}
+                    style={styles.inputEmail}
+                    placeholder="Enter your name"
+                    value={username}
+                />
             </View>
             <TouchableOpacity onPress={onPress} style={styles.containerBtn}>
                 <Text style={styles.textBtn}>Get Started</Text>

@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type NavigationType = {
     MainScreen: undefined;
-    ListScreen: { isReload?: boolean };
+    ListScreen: { isReload?: boolean; username?: string } | undefined;
     AddScreen: undefined;
 };
 
