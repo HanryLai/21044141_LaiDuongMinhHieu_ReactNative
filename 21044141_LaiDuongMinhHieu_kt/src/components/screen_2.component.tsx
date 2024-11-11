@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductHook, listProductSlice } from "../redux/reducer.redux";
+import { useNavigation } from "@react-navigation/native";
 
 export const Screen_2 = () => {
     const dispatch = useDispatch();
     const listProduct = useSelector(listProductHook);
+    const navigation = useNavigation();
     useEffect(() => {
         axios
             .get("https://67089ae28e86a8d9e42f653c.mockapi.io/api/product")
@@ -105,7 +107,10 @@ export const Screen_2 = () => {
                     data={listProduct}
                     renderItem={({ item }) => {
                         return (
-                            <View
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.navigate("screen_3", { id: item.id });
+                                }}
                                 style={{
                                     backgroundColor: "#fef5ec",
                                     margin: "auto",
@@ -140,7 +145,7 @@ export const Screen_2 = () => {
                                     <Text style={{ color: "yellow" }}>$</Text>
                                     {item.price}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         );
                     }}
                     numColumns={2}
