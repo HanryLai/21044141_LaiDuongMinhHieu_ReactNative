@@ -1,24 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store.redux";
 
-export const counterSlice = createSlice({
-    name: "counter",
+export const listProductSlice = createSlice({
+    name: "listProduct",
     initialState: {
-        value: 0,
+        value: {},
     },
     reducers: {
-        increment: (state) => {
-            state.value += 1;
-        },
-        decrement: (state) => {
-            state.value -= 1;
-        },
-        incrementByAmount: (state, action: PayloadAction<number>) => {
-            state.value += action.payload;
+        getListProduct: (state, payload: PayloadAction<any>) => {
+            state.value = payload.payload;
         },
     },
     extraReducers: (builder) => {},
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
-export const sample = (e: RootState) => e.counter.value;
+export const { getListProduct } = listProductSlice.actions;
+export const listProductHook = (e: RootState) => e.listProductReducer.value;
