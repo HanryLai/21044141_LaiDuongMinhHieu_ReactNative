@@ -1,10 +1,11 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Image, Text, Touchable, TouchableOpacity, View } from "react-native";
 
 export const Screen_3 = ({ navigation, route }) => {
     // const route = useRoute();
+    const navigationHook = useNavigation();
     const [product, setProduct] = useState({});
     useEffect(() => {
         axios
@@ -90,6 +91,7 @@ export const Screen_3 = ({ navigation, route }) => {
                     source={require("../../assets/img/tym_cart.png")}
                 />
                 <TouchableOpacity
+                    onPress={() => navigationHook.navigate("add_screen")}
                     style={{
                         backgroundColor: "#e94141",
                         width: "60%",

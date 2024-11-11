@@ -7,6 +7,7 @@ import { MainComponent } from "./src/components/main.component";
 import { store } from "./src/redux/store.redux";
 import { Screen_2 } from "./src/components/screen_2.component";
 import { Screen_3 } from "./src/components/screen_3.component";
+import { AddComponent } from "./src/components/add.component";
 const Stack = createNativeStackNavigator<any>();
 export default function App() {
     return (
@@ -27,6 +28,11 @@ export default function App() {
                         <Stack.Screen
                             name="screen_3"
                             component={Screen_3}
+                            options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                            name="add_screen"
+                            component={AddComponent}
                             options={{ headerShown: false }}
                         />
                     </Stack.Navigator>
